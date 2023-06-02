@@ -3,14 +3,18 @@ import { GoogleButton } from 'react-google-button';
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import loginImg from "../assets/login.jpg";
+import { ref,  getDatabase, child, push, update} from 'firebase/database';
 
 const Signin = () => {
   const { googleSignIn, user } = UserAuth();
+
+
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
+      
     } catch (error) {
       console.log(error);
     }
@@ -20,7 +24,9 @@ const Signin = () => {
     if (user != null) {
       navigate('/dashboard');
     }
-  }, [user]);
+
+  }, [user, navigate]);
+
 
   return (
     <div className="relative w-full h-screen bg-zinc-900/90">

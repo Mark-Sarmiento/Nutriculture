@@ -41,7 +41,7 @@ const Sidebar = ({children}) => {
       <div className={`bg-dark-purple h-screen p-5 pt-8 relative ${open ? "w-72" : "w-20"} ${!user && "hidden"} duration-300`}>
         <BsArrowLeftShort  className={`border border-dark-purple cursor-pointer bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 ${!open && "rotate-180"} duration-500`} onClick={()=>setOpen(!open)}/>
         <div className='inline-flex '>
-          <img className={`${open && "rotate-[360deg]"} duration-500 mr-2 rounded-full bg-white bg-opacity-30  w-10 h-10  border shadow-lg shadow-blue-500/50`} src={`${user?.photoURL}`}/>
+          <img className={`${open && "rotate-[360deg]"} duration-500 mr-2 rounded-full bg-white bg-opacity-30  w-10 h-10  border shadow-lg shadow-blue-500/50`} src={`${user?.photoURL}`} alt='Profile'/>
           <p className={`text-white origin-left text-xl font-medium  duration-300 ${!open && "scale-0"}`}>{user?.displayName}</p>
         </div>
         <div >

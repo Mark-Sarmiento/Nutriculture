@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {db} from '../firebase';
-import {collection, getDocs, onSnapshot} from 'firebase/firestore';
+//import {db} from '../firebase';
+//import {collection, getDocs, onSnapshot} from 'firebase/firestore';
 
  const FirestoreData = () => {
     
-    const [data, setData] =  useState([]);
+ /*   const [data, setData] =  useState([]);
       
       useEffect(() =>{
     
@@ -30,10 +30,10 @@ import {collection, getDocs, onSnapshot} from 'firebase/firestore';
         
       },[]
     )
-
+*/
   return (
     <div>
-        <div>Dashboard</div>
+      {/*  <div>Dashboard</div>
 
         <div>{data.map((user)=>{
         return (
@@ -44,7 +44,7 @@ import {collection, getDocs, onSnapshot} from 'firebase/firestore';
 
             );
         
-        })}</div>
+        })}</div>*/}
     </div>
   )
 }

@@ -1,17 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { database } from '../firebase';
-import { ref, child, onValue, off } from 'firebase/database';
+import { ref,  onValue, off, getDatabase, child, push, update} from 'firebase/database';
 import { UserAuth } from '../context/AuthContext';
 
 const FirebaseData = () => {
     const { user } = UserAuth();
-    
 
+    function writeNewPost() {
+        const db = getDatabase();
+      
+        // A post entry.
+        const postData = {
+          Value: 123
+        };
+      
+        // Get a key for a new Post.
+        //const newPostKey = push(child(ref(db, 'Users'), 'RH')).key;
+      
+        // Write the new post's data simultaneously in the posts list and the user's post list.
+        const updates = {};
+        updates['/Users/' + `${user?.uid}/` + 'ESP1/' + 'RH' ] = postData;
+        updates['/Users/' + `${user?.uid}/` + 'ESP1/' + 'Temp' ] = postData;
+      
+        return update(ref(db), updates);
+      }
+    
+// relative humidity
     const [data1, setData1] = useState(null);
 
     useEffect(() => {
 
-        const RH = `/Users/${user?.uid}/ESP1/RH`;
+        const RH = `/Users/${user?.uid}/ESP1/RH/Value`;
     
         const path = (RH) ; // Replace with the actual path
 
@@ -28,12 +47,13 @@ const FirebaseData = () => {
             // Unsubscribe from the listener
             off(dataRef1, onDataChange);
         };
-    }, []);
+    }, [user?.uid]);
 
+// Temperature
     const [data2, setData2] = useState(null);
 
     useEffect(() => {
-        const Temp = `Users/${user?.uid}/ESP1/Temp`;
+        const Temp = `Users/${user?.uid}/ESP1/Temp/Value`;
         const path = (Temp); // Replace with the actual path
 
         const onDataChange = (snapshot) => {
@@ -49,10 +69,11 @@ const FirebaseData = () => {
             // Unsubscribe from the listener
             off(dataRef2, onDataChange);
         };
-    }, []);
+    }, [user?.uid]);
 
     return (
         <div>
+            <button onClick={writeNewPost()}>Create</button>
             {data1 ? (
                 <div>
                     <h2>Data from Firebase Realtime Database:</h2>
@@ -62,7 +83,7 @@ const FirebaseData = () => {
 
                 </div>
             ) : (
-                <p>Loading data...</p>
+                <p>Loading ...</p>
             )
             }
         </div >

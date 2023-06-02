@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard'
 import AddUnit from './pages/AddUnit'
 import Sidebar from './components/Sidebar';
 
-function App({}) {
+function App() {
   return (
     <div>
       <AuthContextProvider>
