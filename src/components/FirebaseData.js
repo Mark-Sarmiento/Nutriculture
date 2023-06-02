@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { database } from '../firebase';
 import { ref, child, onValue, off } from 'firebase/database';
+import { UserAuth } from '../context/AuthContext';
 
-const FirebaseRealtimeData = () => {
+const FirebaseData = () => {
+    const { user } = UserAuth();
+    
+
     const [data1, setData1] = useState(null);
 
     useEffect(() => {
-        const path = '/Sensors/RH'; // Replace with the actual path
+
+        const RH = `/Users/${user?.uid}/ESP1/RH`;
+    
+        const path = (RH) ; // Replace with the actual path
 
         const onDataChange = (snapshot) => {
             const fetchedData1 = snapshot.val();
@@ -22,10 +29,12 @@ const FirebaseRealtimeData = () => {
             off(dataRef1, onDataChange);
         };
     }, []);
+
     const [data2, setData2] = useState(null);
 
     useEffect(() => {
-        const path = '/Sensors/heartrate'; // Replace with the actual path
+        const Temp = `Users/${user?.uid}/ESP1/Temp`;
+        const path = (Temp); // Replace with the actual path
 
         const onDataChange = (snapshot) => {
             const fetchedData2 = snapshot.val();
@@ -47,9 +56,9 @@ const FirebaseRealtimeData = () => {
             {data1 ? (
                 <div>
                     <h2>Data from Firebase Realtime Database:</h2>
-                    <p>{data1}</p>
-                    <p>{data2}</p>
-
+                    <p>Relative humidity : {data1}</p>
+                    <p>Temperature: {data2}</p>
+                    <p>{user?.uid}</p>
 
                 </div>
             ) : (
@@ -60,4 +69,4 @@ const FirebaseRealtimeData = () => {
     );
 };
 
-export default FirebaseRealtimeData;
+export default FirebaseData;
