@@ -4,7 +4,7 @@ import { database } from '../firebase';
 import { ref, onValue } from "firebase/database";
 import { UserAuth } from '../context/AuthContext';
 
-const RHplot = () => {
+const MyChartComponent = () => {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
 
@@ -27,7 +27,7 @@ const RHplot = () => {
 
             // Limit the number of data points to display
             if (counter >= 10) {
-              break;
+              chartData.shift();
             }
           }
         }
@@ -40,15 +40,15 @@ const RHplot = () => {
   }, [user]);
 
   return (
-    <LineChart width={500} height={300} data={data}>
+    <LineChart width={500} height={300} data={data} >
       <XAxis dataKey="time" domain={[0, "dataMax"]} />
       <YAxis />
       <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-      <Line type="monotone" dataKey="value" stroke="#8884d8" />
+      <Line type="monotone" dataKey="value" stroke="#8884d8" isAnimationActive={false} />
       <Tooltip />
       <Legend />
     </LineChart>
   );
 };
 
-export default RHplot;
+export default MyChartComponent;
