@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 //import {Firestore, collection, getDocs, onSnapshot} from 'firebase/firestore';
 import FirebaseData from '../components/FirebaseData';
 //import FirestoreData from '../components/FirestoreData';
-import PlotRH from '../components/PlotRH'
-import MyChartComponent from "../components/RHplot.js";
+import RHplot from "../components/RHplot.js";
 //import { UserAuth } from '../context/AuthContext';
 
 
