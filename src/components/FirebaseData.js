@@ -11,21 +11,30 @@ const FirebaseData = () => {
         // create a key for values and time in rh sensors 
         //every time i click 
         const RHkeys = push(ref(database,'/Users/' + `${user?.uid}` + '/ESP1/RH' )).key;
+        const Tempkeys = push(ref(database,'/Users/' + `${user?.uid}` + '/ESP1/Temp' )).key;
         // create a random values in rh sensors
-        const postData = {
+        const postDatarh = {
           Value: Math.floor(Math.random()*100),
-          Time: parseInt(0),
+          Time: parseInt(2121615321),
         };
+        // create a random values in temp sensors
+        const postDatatemp = {
+            Value: Math.floor(Math.random()*100),
+            Time: parseInt(0),
+          };
         // return the value and time to
         const updates = {};
-        updates['/Users/' + `${user?.uid}` + '/ESP1/RH/'+ RHkeys] = postData;
+        updates['/Users/' + `${user?.uid}` + '/ESP1/RH/'+ RHkeys] = postDatarh;
+        updates['/Users/' + `${user?.uid}` + '/ESP1/Temp/'+ Tempkeys] = postDatatemp;
       
         return update(ref(database), updates);
       }
     
 // relative humidity
-    const [data1, setData1] = useState(null);
+    const [data1, setData1] = useState(null); 
+
     useEffect(() => {
+
         const RH = `/Users/${user?.uid}/ESP1/RH/data/Value`;
     
         const path = (RH) ; // Replace with the actual path

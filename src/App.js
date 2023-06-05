@@ -7,6 +7,8 @@ import Signin from './pages/Signin';
 import Dashboard from './pages/Dashboard'
 import AddUnit from './pages/AddUnit'
 import Sidebar from './components/Sidebar';
+import Tempplot from './components/content/Tempplot';
+import RHpage from './components/RHpage';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path="/dashboard" element={<Protected> <Dashboard/> </Protected>}/>
             <Route path="/addunit" element={<Protected> <AddUnit/> </Protected>}/>
+            <Route path="/sensors/humidity" element={<Protected> <RHpage/> </Protected>}/>
+            <Route path="/sensors/temperature" element={<Protected> <Tempplot/> </Protected>}/>
             
           </Routes>
         </Sidebar>
