@@ -9,6 +9,8 @@ import AddUnit from './pages/AddUnit'
 import Sidebar from './components/Sidebar';
 import Tempplot from './components/content/Tempplot';
 import RHpage from './components/RHpage';
+import './app.css'
+import ECpage from './components/ECpage';
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
             <Route path="/addunit" element={<Protected> <AddUnit/> </Protected>}/>
             <Route path="/sensors/humidity" element={<Protected> <RHpage/> </Protected>}/>
             <Route path="/sensors/temperature" element={<Protected> <Tempplot/> </Protected>}/>
+            <Route path="/sensors/ECsensor" element={<Protected> <ECpage/> </Protected>}/>
             
           </Routes>
         </Sidebar>

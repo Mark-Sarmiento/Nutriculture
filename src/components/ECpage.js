@@ -1,18 +1,18 @@
 import React from 'react';
-import RHplot from './content/RHplot';
 import { ResponsiveContainer } from 'recharts';
+import ECplot from './content/ECplot';
 
-const RHpage = () => {
+const ECpage = () => {
   return (
     <div className=' m-auto chart-container'>
-      <h1 className="pt-6 pl-4">Relative Humidity Graph</h1>
+      <h1 className="pt-6 pl-4">Electric Conductivity</h1>
       <div className=" m-auto w-screen h-screen">
         <ResponsiveContainer width="100%" height="100%">
-          <RHplot />
+          <ECplot/>
         </ResponsiveContainer>
       </div>
     </div>
   );
 };
 
-export default RHpage;
+export default ECpage;

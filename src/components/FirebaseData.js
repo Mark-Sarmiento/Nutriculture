@@ -12,13 +12,23 @@ const FirebaseData = () => {
         //every time i click 
         const RHkeys = push(ref(database,'/Users/' + `${user?.uid}` + '/ESP1/RH' )).key;
         const Tempkeys = push(ref(database,'/Users/' + `${user?.uid}` + '/ESP1/Temp' )).key;
+        const ECkeys = push(ref(database,'/Users/' + `${user?.uid}` + '/ESP1/EC' )).key;
+        const PHkeys = push(ref(database,'/Users/' + `${user?.uid}` + '/ESP1/PH' )).key;
         // create a random values in rh sensors
         const postDatarh = {
           Value: Math.floor(Math.random()*100),
-          Time: parseInt(2121615321),
+          Time: parseInt(0),
         };
         // create a random values in temp sensors
         const postDatatemp = {
+            Value: Math.floor(Math.random()*100),
+            Time: parseInt(0),
+          };
+          const postDataec = {
+            Value: Math.floor(Math.random()*100),
+            Time: parseInt(0),
+          };
+          const postDataph = {
             Value: Math.floor(Math.random()*100),
             Time: parseInt(0),
           };
@@ -26,6 +36,8 @@ const FirebaseData = () => {
         const updates = {};
         updates['/Users/' + `${user?.uid}` + '/ESP1/RH/'+ RHkeys] = postDatarh;
         updates['/Users/' + `${user?.uid}` + '/ESP1/Temp/'+ Tempkeys] = postDatatemp;
+        updates['/Users/' + `${user?.uid}` + '/ESP1/EC/'+ ECkeys] = postDataec;
+        updates['/Users/' + `${user?.uid}` + '/ESP1/PH/'+ PHkeys] = postDataph;
       
         return update(ref(database), updates);
       }

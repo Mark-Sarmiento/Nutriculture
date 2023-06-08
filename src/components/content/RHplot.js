@@ -4,6 +4,7 @@ import { database } from '../../firebase';
 import { ref, onValue } from "firebase/database";
 import { UserAuth } from '../../context/AuthContext';
 
+
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
@@ -21,7 +22,7 @@ const RHplot = () => {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
 
-  const MAX_DATA_CHART = 10;
+  const MAX_DATA_CHART = 20;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,8 +56,9 @@ const RHplot = () => {
   }, [user?.uid]);
 
   return (
-    <div className="w-full h-64 ">
-      <ResponsiveContainer>
+    <div className="">
+      <p></p>
+      <ResponsiveContainer  width="100%" height={300}>
         <AreaChart data={data}>
           <defs>
             <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
