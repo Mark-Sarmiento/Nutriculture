@@ -7,26 +7,26 @@ import Signin from './pages/Signin';
 import Dashboard from './pages/Dashboard'
 import AddUnit from './pages/AddUnit'
 import Sidebar from './components/Sidebar';
-import Tempplot from './components/content/Tempplot';
 import RHpage from './components/RHpage';
 import './app.css'
 import ECpage from './components/ECpage';
+import Temppage from './components/Temppage';
 
 function App() {
   return (
-    <div>
+    <div className='h-screen overflow-y-hidden'>
       <AuthContextProvider>
         <Routes>
+          <Route path='/' element={<Home />} />
           <Route path='/signin' element={<Signin />} />
         </Routes>
 
         <Sidebar>
           <Routes>
-            <Route path='/' element={<Home />} />
             <Route path="/dashboard" element={<Protected> <Dashboard/> </Protected>}/>
             <Route path="/addunit" element={<Protected> <AddUnit/> </Protected>}/>
             <Route path="/sensors/humidity" element={<Protected> <RHpage/> </Protected>}/>
-            <Route path="/sensors/temperature" element={<Protected> <Tempplot/> </Protected>}/>
+            <Route path="/sensors/temperature" element={<Protected> <Temppage/> </Protected>}/>
             <Route path="/sensors/ECsensor" element={<Protected> <ECpage/> </Protected>}/>
             
           </Routes>

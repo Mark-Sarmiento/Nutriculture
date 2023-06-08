@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { UserAuth } from '../context/AuthContext';
-import homebg from '../assets/homepage.mp4';
+//import { UserAuth } from '../context/AuthContext';
+//import homebg from '../assets/homepage.mp4';
 import homebg2 from '../assets/homepage2.mp4';
 
 const Home = () => {
 
   return (
-    <div className='w-full h-screen relative'>
+    <div className='w-full h-screen relative '>
       <div className='flex justify-between items-center h-20 px-4 absolute z-10 text-white'>
         <h1>Nutriculture</h1>
       </div>
-      <video className='w-full h-full object-cover' src={homebg2} autoPlay loop muted/>
+      <video className='w-full h-full object-cover bg-fill' src={homebg2} autoPlay loop muted/>
       <div className='absolute w-full h-full top-0 left-0 bg-gray-900/50'></div>
       <div className='absolute top-0 w-full h-full flex flex-col justify-center text-center text-white p-4'>
         <h1>Automated Farming</h1>

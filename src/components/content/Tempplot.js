@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { database } from '../../firebase';
 import { ref, onValue } from "firebase/database";
 import { UserAuth } from '../../context/AuthContext';
+
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
     return (
-      <div className="custom-tooltip">
-        <p className="label">Time: {dataPoint.time}</p>
-        <p className="label">Value: {dataPoint.value}</p>
+      <div className="bg-white rounded p-2">
+        <p className="text-gray-800 font-medium">Time: {dataPoint.time}</p>
+        <p className="text-gray-800 font-medium">Value: {dataPoint.value}</p>
       </div>
     );
   }
@@ -20,8 +21,10 @@ const CustomTooltip = ({ active, payload }) => {
 const Tempplot = () => {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
+  const [color, setColor] = useState("#8884d8");
+  const [areaColor, setAreaColor] = useState("url(#colorValue)");
 
-  const MAX_DATA_CHART = 10;
+  const MAX_DATA_CHART = 20;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +51,16 @@ const Tempplot = () => {
         }
 
         setData(chartData);
+
+        // Check the latest fetched data and update the color accordingly
+        const latestValue = chartData[chartData.length - 1]?.value;
+        if (latestValue < 50) {
+          setColor("red"); // Change the line color to red if the latest value is below 50
+          setAreaColor("url(#colorValueRed)"); // Change the area color to red gradient if the latest value is below 50
+        } else {
+          setColor("#8884d8"); // Reset the line color to the default if the latest value is 50 or above
+          setAreaColor("url(#colorValue)"); // Reset the area color to the default gradient if the latest value is 50 or above
+        }
       });
     };
 
@@ -55,18 +68,30 @@ const Tempplot = () => {
   }, [user?.uid]);
 
   return (
-    <>
-        <h3>Temperature Graph</h3>
-        <LineChart width={500} height={300} data={data}>
-            <XAxis dataKey="time" domain={[0, "dataMax"]} />
-            <YAxis />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Line type="monotone" dataKey="value" stroke="#8884d8" isAnimationActive={false} />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-        </LineChart>
-        <p>{[data.value]}</p>
-    </>
+    <div className="">
+      <p></p>
+      <ResponsiveContainer  width="100%" height={300}>
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="colorValueRed" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="red" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="red" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <XAxis dataKey="time" domain={[0, "dataMax"]}  />
+          <YAxis />
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Area type="linear" dataKey="value" stroke={color} fillOpacity={1} fill={areaColor} isAnimationActive={false}/>
+        </AreaChart>
+      </ResponsiveContainer>
+      <p>{[data.value]}</p>
+    </div>
   );
 };
 
