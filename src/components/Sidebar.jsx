@@ -42,6 +42,10 @@ const Sidebar = ({children}) => {
           path: '/sensors/PHLevel',
           name: 'PH Level',
         },
+        {
+          path: '/sensors/WaterTemp',
+          name: 'Water Temperature',
+        },
       ],
     },
   ];
@@ -55,7 +59,7 @@ const Sidebar = ({children}) => {
   };
 
   return (
-    <div className={`inline-flex `}>
+    <div className={`inline-flex  `}>
       <div
         className={`bg-dark-purple h-screen p-5 pt-8 relative   ${
           open ? 'w-72' : 'w-20'
@@ -130,10 +134,8 @@ const Sidebar = ({children}) => {
             </div>
           ))}
 
-          <div
-            className={`cursor-pointer text-gray-300 text-sm flex items-center gap-x-4  p-2 hover:bg-light-white rounded-md mt-2`}
-            onClick={handleSignOut}
-          >
+          <div className={`cursor-pointer text-gray-300 text-sm flex items-center gap-x-4  p-2 hover:bg-light-white rounded-md mt-2`}
+            onClick={handleSignOut}>
             <RiLogoutBoxRLine className={`text-2xl block float-left duration-500 ${!open && 'rotate-[360deg]'}`} />
             <p className={`text-base font-medium flex-1 duration-300 ${!open && 'hidden'}`}>Logout</p>
           </div>
@@ -141,10 +143,10 @@ const Sidebar = ({children}) => {
       </div>
 
       {/* Render the children components */}
-      <div>
-        <Outlet />
-        {children}
-      </div>
+      
+      <Outlet />
+      {children}
+      
     </div>
   );
 };

@@ -5,7 +5,6 @@ import { ref, onValue } from "firebase/database";
 import { UserAuth } from '../../context/AuthContext';
 import DashboardBox from "./DashboardBox";
 
-
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
@@ -19,7 +18,16 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-const RHplot = () => {
+const LatestValue = ({ value }) => {
+  return (
+    <div className="value-container">
+      <h3>Latest Value:</h3>
+      <p>{value}</p>
+    </div>
+  );
+};
+
+const PHplot = () => {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
   const [color, setColor] = useState("#8884d8");
@@ -29,7 +37,7 @@ const RHplot = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const dbRef = ref(database, `Users/${user?.uid}/ESP1/data/RH`);
+      const dbRef = ref(database, `Users/${user?.uid}/ESP1/data/PH`);
       onValue(dbRef, (snapshot) => {
         const firebaseData = snapshot.val();
         const chartData = [];
@@ -68,18 +76,22 @@ const RHplot = () => {
     fetchData();
   }, [user?.uid]);
 
+  const currentValue = data.length > 0 ? data[data.length - 1].value : null;
+
   return (
-    <div className="">
+    <div className="w-screen h-screen overflow-x-auto">
       <p></p>
-      <DashboardBox gridArea="15">
-        <ResponsiveContainer  width="100%" height={300}>
-          <AreaChart data={data}
-           margin={{
-            top: 15,
-            right: 25,
-            left: -10,
-            bottom: 60,
-          }}>
+      <DashboardBox className="bg-gray-300">
+        <ResponsiveContainer width="100%" height={300} overflow="auto">
+          <AreaChart
+            data={data}
+            margin={{
+              top: 20,
+              bottom: 20,
+              left: 20,
+              right: 20
+            }}
+          >
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -90,18 +102,18 @@ const RHplot = () => {
                 <stop offset="95%" stopColor="red" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="time" domain={[0, "dataMax"]}  />
-            <YAxis  />
+            <XAxis dataKey="time" domain={[0, "dataMax"]} />
+            <YAxis />
             <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
-            <Area type="linear" dataKey="value" stroke={color} fillOpacity={1} fill={areaColor} isAnimationActive={false}/>
+            <Area type="linear" dataKey="value" stroke={color} fillOpacity={1} fill={areaColor} isAnimationActive={false} />
           </AreaChart>
         </ResponsiveContainer>
       </DashboardBox>
-      <p>{[data.value]}</p>
+      <LatestValue value={currentValue} />
     </div>
   );
 };
 
-export default RHplot;
+export default PHplot;

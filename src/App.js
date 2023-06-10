@@ -11,24 +11,28 @@ import RHpage from './components/RHpage';
 import './app.css'
 import ECpage from './components/ECpage';
 import Temppage from './components/Temppage';
+import PHpage from './components/PHpage';
+import WTpage from './components/WTpage';
 
 function App() {
   return (
-    <div className='h-screen overflow-y-hidden'>
+    <div className='h-screen overflow-y-hidden mx-auto '>
       <AuthContextProvider>
         <Routes>
-          <Route path='/' element={<Home />} />
+          
           <Route path='/signin' element={<Signin />} />
         </Routes>
 
         <Sidebar>
           <Routes>
+            <Route path='/' element={<Home />} />
             <Route path="/dashboard" element={<Protected> <Dashboard/> </Protected>}/>
             <Route path="/addunit" element={<Protected> <AddUnit/> </Protected>}/>
             <Route path="/sensors/humidity" element={<Protected> <RHpage/> </Protected>}/>
             <Route path="/sensors/temperature" element={<Protected> <Temppage/> </Protected>}/>
             <Route path="/sensors/ECsensor" element={<Protected> <ECpage/> </Protected>}/>
-            
+            <Route path="/sensors/PHLevel" element={<Protected> <PHpage/> </Protected>}/>
+            <Route path="/sensors/WaterTemp" element={<Protected> <WTpage/> </Protected>}/>
           </Routes>
         </Sidebar>
         

@@ -28,7 +28,7 @@ const Tempplot = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const dbRef = ref(database, `Users/${user?.uid}/ESP1/Temp`);
+      const dbRef = ref(database, `Users/${user?.uid}/ESP1/data/Temp`);
       onValue(dbRef, (snapshot) => {
         const firebaseData = snapshot.val();
         const chartData = [];

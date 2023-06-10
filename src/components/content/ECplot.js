@@ -5,6 +5,7 @@ import { ref, onValue } from "firebase/database";
 import { UserAuth } from '../../context/AuthContext';
 import DashboardBox from "./DashboardBox";
 
+
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
@@ -27,6 +28,8 @@ const LatestValue = ({ value }) => {
   );
 };
 
+
+
 const ECplot = () => {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
@@ -35,9 +38,13 @@ const ECplot = () => {
 
   const MAX_DATA_CHART = 20;
 
+
+ 
+
+
   useEffect(() => {
     const fetchData = async () => {
-      const dbRef = ref(database, `Users/${user?.uid}/ESP1/EC`);
+      const dbRef = ref(database, `Users/${user?.uid}/ESP1/data/EC`);
       onValue(dbRef, (snapshot) => {
         const firebaseData = snapshot.val();
         const chartData = [];
@@ -61,6 +68,7 @@ const ECplot = () => {
 
         setData(chartData);
 
+        
         // Check the latest fetched data and update the color accordingly
         const latestValue = chartData[chartData.length - 1]?.value;
         if (latestValue < 50) {
