@@ -145,7 +145,9 @@ const Sidebar = ({children}) => {
       {/* Render the children components */}
       
       <Outlet />
+      <div className='inline-flex '>
       {children}
+      </div>
       
     </div>
   );

@@ -7,6 +7,7 @@ import DashboardBox from "./DashboardBox";
 
 
 const CustomTooltip = ({ active, payload }) => {
+
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
     return (
@@ -37,10 +38,6 @@ const ECplot = () => {
   const [areaColor, setAreaColor] = useState("url(#colorValue)");
 
   const MAX_DATA_CHART = 20;
-
-
- 
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,10 +84,10 @@ const ECplot = () => {
   const currentValue = data.length > 0 ? data[data.length - 1].value : null;
 
   return (
-    <div className="w-screen h-screen overflow-x-auto">
+    <div className="w-screen h-screen py-10 ">
       <p></p>
-      <DashboardBox className="bg-gray-300">
-        <ResponsiveContainer width="100%" height={300} overflow="auto">
+      <DashboardBox className="bg-gray-300 ml-4 px-4 " width="calc(87% - 100px)" height={300}>
+        <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}
             margin={{
@@ -111,10 +108,9 @@ const ECplot = () => {
               </linearGradient>
             </defs>
             <XAxis dataKey="time" domain={[0, "dataMax"]} />
-            <YAxis />
+            <YAxis dataKey="value" />
             <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
             <Tooltip content={<CustomTooltip />} />
-            <Legend />
             <Area type="linear" dataKey="value" stroke={color} fillOpacity={1} fill={areaColor} isAnimationActive={false} />
           </AreaChart>
         </ResponsiveContainer>

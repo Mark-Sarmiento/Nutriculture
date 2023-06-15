@@ -18,6 +18,7 @@ function App() {
   return (
     <div className='h-screen overflow-y-hidden mx-auto '>
       <AuthContextProvider>
+        
         <Routes>
           
           <Route path='/signin' element={<Signin />} />

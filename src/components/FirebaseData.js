@@ -38,7 +38,7 @@ const FirebaseData = () => {
             Time: parseInt(0),
           };
           const postDatairphup = {
-            Value: Math.floor(Math.random()*100),
+            Value: Math.floor(Math.random()*55),
             Time: parseInt(0),
           };
           const postDatairphdown = {

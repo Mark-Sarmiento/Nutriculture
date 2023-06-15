@@ -7,6 +7,7 @@ import DashboardBox from "./DashboardBox";
 
 
 const CustomTooltip = ({ active, payload }) => {
+
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
     return (
@@ -18,6 +19,17 @@ const CustomTooltip = ({ active, payload }) => {
   }
   return null;
 };
+
+const LatestValue = ({ value }) => {
+  return (
+    <div className="value-container">
+      <h3>Latest Value:</h3>
+      <p>{value}</p>
+    </div>
+  );
+};
+
+
 
 const RHplot = () => {
   const { user } = UserAuth();
@@ -53,6 +65,7 @@ const RHplot = () => {
 
         setData(chartData);
 
+        
         // Check the latest fetched data and update the color accordingly
         const latestValue = chartData[chartData.length - 1]?.value;
         if (latestValue < 50) {
@@ -68,18 +81,22 @@ const RHplot = () => {
     fetchData();
   }, [user?.uid]);
 
+  const currentValue = data.length > 0 ? data[data.length - 1].value : null;
+
   return (
-    <div className="">
+    <div className="w-screen h-screen py-10 ">
       <p></p>
-      <DashboardBox gridArea="15">
-        <ResponsiveContainer  width="100%" height={300}>
-          <AreaChart data={data}
-           margin={{
-            top: 15,
-            right: 25,
-            left: -10,
-            bottom: 60,
-          }}>
+      <DashboardBox className="bg-gray-300 ml-4 px-4 " width="calc(87% - 100px)" height={300}>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={data}
+            margin={{
+              top: 20,
+              bottom: 20,
+              left: 20,
+              right: 20
+            }}
+          >
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -90,16 +107,15 @@ const RHplot = () => {
                 <stop offset="95%" stopColor="red" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="time" domain={[0, "dataMax"]}  />
-            <YAxis  />
+            <XAxis dataKey="time" domain={[0, "dataMax"]} />
+            <YAxis dataKey="value" />
             <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
             <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Area type="linear" dataKey="value" stroke={color} fillOpacity={1} fill={areaColor} isAnimationActive={false}/>
+            <Area type="linear" dataKey="value" stroke={color} fillOpacity={1} fill={areaColor} isAnimationActive={false} />
           </AreaChart>
         </ResponsiveContainer>
       </DashboardBox>
-      <p>{[data.value]}</p>
+      <LatestValue value={currentValue} />
     </div>
   );
 };
