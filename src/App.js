@@ -23,19 +23,18 @@ function App() {
           
           <Route path='/signin' element={<Signin />} />
         </Routes>
-
-        <Sidebar>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path="/dashboard" element={<Protected> <Dashboard/> </Protected>}/>
-            <Route path="/addunit" element={<Protected> <AddUnit/> </Protected>}/>
-            <Route path="/sensors/humidity" element={<Protected> <RHpage/> </Protected>}/>
-            <Route path="/sensors/temperature" element={<Protected> <Temppage/> </Protected>}/>
-            <Route path="/sensors/ECsensor" element={<Protected> <ECpage/> </Protected>}/>
-            <Route path="/sensors/PHLevel" element={<Protected> <PHpage/> </Protected>}/>
-            <Route path="/sensors/WaterTemp" element={<Protected> <WTpage/> </Protected>}/>
-          </Routes>
-        </Sidebar>
+          <Sidebar>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path="/dashboard" element={<Protected> <Dashboard/> </Protected>}/>
+              <Route path="/setparameters" element={<Protected> <AddUnit/> </Protected>}/>
+              <Route path="/sensors/humidity" element={<Protected> <RHpage/> </Protected>}/>
+              <Route path="/sensors/temperature" element={<Protected> <Temppage/> </Protected>}/>
+              <Route path="/sensors/ECsensor" element={<Protected> <ECpage/> </Protected>}/>
+              <Route path="/sensors/PHLevel" element={<Protected> <PHpage/> </Protected>}/>
+              <Route path="/sensors/WaterTemp" element={<Protected> <WTpage/> </Protected>}/>
+            </Routes>
+          </Sidebar>
         
       </AuthContextProvider>
     </div>
