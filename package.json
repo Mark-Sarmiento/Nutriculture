@@ -30,7 +30,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build  ",
+    "deploy": "masters -d build --entry ./src/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build --entry ./src/index.js",
     "test": "react-scripts test",
