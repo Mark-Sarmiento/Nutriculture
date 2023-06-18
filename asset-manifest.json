@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "//mark-sarmiento.github.io/Nutriculture/static/css/main.86119b62.css",
+    "main.js": "//mark-sarmiento.github.io/Nutriculture/static/js/main.c8c699bc.js",
+    "static/media/homepage2.mp4": "//mark-sarmiento.github.io/Nutriculture/static/media/homepage2.14e069e692658e0cb10a.mp4",
+    "static/media/login.jpg": "//mark-sarmiento.github.io/Nutriculture/static/media/login.8222c882f9372ee39e1a.jpg",
+    "static/media/spinach.jpeg": "//mark-sarmiento.github.io/Nutriculture/static/media/spinach.bc4ba73fdf41ec090518.jpeg",
+    "static/media/petchay.jpg": "//mark-sarmiento.github.io/Nutriculture/static/media/petchay.b7cb0d0d84d6145b4bb9.jpg",
+    "index.html": "//mark-sarmiento.github.io/Nutriculture/index.html",
+    "main.86119b62.css.map": "//mark-sarmiento.github.io/Nutriculture/static/css/main.86119b62.css.map",
+    "main.c8c699bc.js.map": "//mark-sarmiento.github.io/Nutriculture/static/js/main.c8c699bc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86119b62.css",
+    "static/js/main.c8c699bc.js"
+  ]
+}
