@@ -17,8 +17,8 @@ const Sidebar = ({children}) => {
       icon: <RiDashboardFill />,
     },
     {
-      path: '/addunit',
-      name: 'Add Unit',
+      path: '/setparameters',
+      name: 'Set Parameters',
       icon: <BsPlusLg />,
     },
     {

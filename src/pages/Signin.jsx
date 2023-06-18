@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { GoogleButton } from 'react-google-button';
 import { UserAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import loginImg from "../assets/login.jpg";
 
-// Import the PopupForm component
-import PopupForm from '../context/PopupForm';
 
 const Signin = () => {
   const { googleSignIn, user } = UserAuth();
   const navigate = useNavigate();
-  
-
-  // State variable to control the display of the pop-up form
-  const [showPopupForm, setShowPopupForm] = useState(false);
 
   const handleGoogleSignIn = async () => {
     try {
       await googleSignIn();
-      setShowPopupForm(true); // Display the pop-up form
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +21,7 @@ const Signin = () => {
 
   useEffect(() => {
     if (user != null) {
-      navigate('/addunit');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
   

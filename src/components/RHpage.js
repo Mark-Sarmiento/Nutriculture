@@ -1,5 +1,5 @@
 import React from 'react';
-import RHplot from './content/RHplot';
+import RHplot, {LatestValueRH} from './content/RHplot';
 import { ResponsiveContainer } from 'recharts';
 
 const RHpage = () => {

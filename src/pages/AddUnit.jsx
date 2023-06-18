@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const AddUnit = () => {
   const { user } = UserAuth();
   const [showPopupForm, setShowPopupForm] = useState(true);
-  const [selectedPlant, setSelectedPlant] = useState('');
+  const [selectedPlant, setSelectedPlant] = useState(localStorage.getItem('selectedPlant') || '');
   const navigate = useNavigate();
 
   const setPetchay = () => {
@@ -36,10 +36,12 @@ const AddUnit = () => {
       WRmax: 100,
       RSRVRmin: 50,
       RSRVRmax: 100,
+      WFstate: true,
     };
     const updates = {};
     updates[`/Users/${user?.uid}/ESP1/Params`] = postPetchay;
     setSelectedPlant('Petchay');
+    localStorage.setItem('selectedPlant', 'Petchay');
     setShowPopupForm(false);
     setTimeout(() => navigate('/dashboard'), 1000);
     return update(ref(database), updates);
@@ -68,10 +70,12 @@ const AddUnit = () => {
       WRmax: 100,
       RSRVRmin: 50,
       RSRVRmax: 100,
+      WFstate: false,
     };
     const updates = {};
     updates[`/Users/${user?.uid}/ESP1/Params`] = postSpinach;
     setSelectedPlant('Spinach');
+    localStorage.setItem('selectedPlant', 'Spinach');
     setShowPopupForm(false);
     setTimeout(() => navigate('/dashboard'), 1000);
     return update(ref(database), updates);
@@ -91,7 +95,7 @@ const AddUnit = () => {
   }, [selectedPlant]);
 
   return (
-    <div>
+    <div className='bg-opacity-50'>
       {showPopupForm && <PopupForm onPetchay={setPetchay} onSpinach={setSpinach} />}
     </div>
   );

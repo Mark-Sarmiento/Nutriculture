@@ -20,7 +20,7 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-const LatestValue = ({ value }) => {
+export const LatestValueRH = ({ value }) => {
   return (
     <div className="value-container">
       <h3>Latest Value:</h3>
@@ -67,6 +67,7 @@ const RHplot = () => {
 
         
         // Check the latest fetched data and update the color accordingly
+        
         const latestValue = chartData[chartData.length - 1]?.value;
         if (latestValue < 50) {
           setColor("red"); // Change the line color to red if the latest value is below 50
@@ -81,7 +82,7 @@ const RHplot = () => {
     fetchData();
   }, [user?.uid]);
 
-  const currentValue = data.length > 0 ? data[data.length - 1].value : null;
+   const currentValue = data.length > 0 ? data[data.length - 1].value : null;
 
   return (
     <div className="w-screen h-screen py-10 ">
@@ -115,9 +116,14 @@ const RHplot = () => {
           </AreaChart>
         </ResponsiveContainer>
       </DashboardBox>
-      <LatestValue value={currentValue} />
+      <LatestValueRH value={currentValue} />
     </div>
   );
 };
 
 export default RHplot;
+
+
+
+
+

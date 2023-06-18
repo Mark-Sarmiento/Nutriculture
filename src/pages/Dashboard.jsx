@@ -2,15 +2,100 @@ import React,{useState, useEffect} from "react";
 import {database} from '../firebase';
 import FirebaseData from '../components/FirebaseData';
 import { UserAuth } from '../context/AuthContext';
-import { ref, onValue, off } from "firebase/database";
+import { ref, onValue, off, update } from "firebase/database";
 import emailjs from "emailjs-com";
+import spinach from '../assets/spinach.jpeg';
+import petchay from '../assets/petchay.jpg';
+import PopupForm from '../context/PopupForm';
 
 emailjs.init("kTo0FMoCg9hTzN5Hn");
 
 
 const Dashboard = () => {
 
-  const { user } = UserAuth();;
+  const { user } = UserAuth();
+  const [showPopupForm, setShowPopupForm] = useState(localStorage.getItem('showPopupForm') || '');
+  const [selectedPlant, setSelectedPlant] = useState(localStorage.getItem('selectedPlant') || '');
+ 
+
+  const setPetchay = () => {
+    const postPetchay = {
+      slctdParam: 'Petchay',
+      RHmin: 50,
+      RHmax: 100,
+      ECmin: 10,
+      ECmax: 100,
+      Tempmin: 50,
+      Tempmax: 100,
+      PHmin: 50,
+      PHmax: 100,
+      WTmin: 50,
+      WTmax: 100,
+      PHupmin: 50,
+      PHupmax: 100,
+      PHdownmin: 50,
+      PHdownmax: 100,
+      NSmin: 50,
+      NSmax: 100,
+      WRmin: 50,
+      WRmax: 100,
+      RSRVRmin: 50,
+      RSRVRmax: 100,
+      WFstate: true,
+    };
+    const updates = {};
+    updates[`/Users/${user?.uid}/ESP1/Params`] = postPetchay;
+    setSelectedPlant('Petchay');
+    localStorage.setItem('selectedPlant', 'Petchay');
+    setShowPopupForm(false);
+    return update(ref(database), updates);
+  };
+
+  const setSpinach = () => {
+    const postSpinach = {
+      slctdParam: 'Spinach',
+      RHmin: 50,
+      RHmax: 100,
+      ECmin: 50,
+      ECmax: 100,
+      Tempmin: 50,
+      Tempmax: 100,
+      PHmin: 50,
+      PHmax: 100,
+      WTmin: 50,
+      WTmax: 100,
+      PHupmin: 50,
+      PHupmax: 100,
+      PHdownmin: 50,
+      PHdownmax: 100,
+      NSmin: 50,
+      NSmax: 100,
+      WRmin: 50,
+      WRmax: 100,
+      RSRVRmin: 50,
+      RSRVRmax: 100,
+      WFstate: false,
+    };
+    const updates = {};
+    updates[`/Users/${user?.uid}/ESP1/Params`] = postSpinach;
+    setSelectedPlant('Spinach');
+    localStorage.setItem('selectedPlant', 'Spinach');
+    setShowPopupForm(false);
+    return update(ref(database), updates);
+  };
+
+  useEffect(() => {
+    const body = document.getElementsByTagName('body')[0];
+    if (selectedPlant === 'Spinach') {
+      body.style.backgroundImage = `url(${spinach})`;
+      body.style.backgroundSize = 'cover';
+    } else if (selectedPlant === 'Petchay') {
+      body.style.backgroundImage = `url(${petchay})`;
+      body.style.backgroundSize = 'cover';
+    } else {
+      body.style.backgroundImage = '';
+    }
+  }, [selectedPlant]);
 
   // Start EC current
   const [ecdata, setecData] = useState([]);
@@ -568,31 +653,60 @@ const [rsrvrEmailSent, setrsrvrEmailSent] = useState(false);
 // End Reservoir current
 
 // Water Flow
-const [waterflow, setwaterflowData] = useState(); 
+const [wfdata, setwfData] = useState(); 
+const [wfstate, setwfstate] = useState(); 
 const [wfcolor, setwfcolor] = useState()
-useEffect(() => {
+const [wfEmailSent, setwfEmailSent] = useState (false)
+//Send warning message for Reservoir level 
+  const SWEwffalse = async () => {
+    const templateParams = {
+      to_email: `${user?.email}`,
+      from_name: "Nutriculture team",
+      to_name: `${user?.displayName}`,
+      subject: "Warning: Water Flow  ",
+      body: `The Water Flow state is closed. \n Please check the Prototype immediately! \n \n Thank you `,
+    };
 
-  const path = `/Users/${user?.uid}/ESP1/data/WF/Value` ; // Replace with the actual path
-
-  const onDataChange = (snapshot) => {
-      const fetchedData1 = snapshot.val();
-      setwaterflowData(fetchedData1);
-      if(fetchedData1 === "ACTIVE"){
-        setwfcolor("bg-green-700");
-      }else{
-        setwfcolor("bg-rose-700");
-      }
+    try {
+      await emailjs.send("service_bi2u2dw", "template_e9yzocj", templateParams);
+      console.log("Email sent successfully");
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const dbRef = ref(database, `Users/${user?.uid}/ESP1/data/WF/Value`);
+      
+      const dbRefCallback = onValue(dbRef, (snapshot) => {
+        const firebaseData = snapshot.val();
+        setwfstate(firebaseData);
+      });
 
-  const dataRef1 = ref(database, path);
-  onValue(dataRef1, onDataChange);
-
-  // Cleanup the listener when the component unmounts
-  return () => {
-      // Unsubscribe from the listener
-      off(dataRef1, onDataChange);
-  };
-}, [user?.uid]);
+        if (wfstate === true ) {
+          setwfcolor('bg-green-700');
+          setwfData("Active")
+          if (wfEmailSent === true){
+            setwfEmailSent(false);
+          }
+        } else {
+          setwfcolor('bg-rose-700');
+          setwfData("Inactive")
+          if (wfEmailSent === false){
+            //SWEwffalse();
+            setwfEmailSent(true);
+          }
+        }
+      // Clean up the listeners when component unmounts or when user?.uid changes
+      return () => {
+        off(dbRef, 'value', dbRefCallback);
+      };
+    };
+  
+    if (user?.uid) {
+      fetchData();
+    }
+  }, [user?.uid, wfdata, wfstate, wfEmailSent]);
 
   const ECcurrent = ecdata.length > 0 ? ecdata[ecdata.length - 1].value : null;
   const RHcurrent = rhdata.length > 0 ? rhdata[rhdata.length - 1].value : null;
@@ -628,6 +742,7 @@ useEffect(() => {
   // END Function to update the grid columns based on the screen size
   return (
     <>
+      {showPopupForm && <PopupForm onPetchay={setPetchay} onSpinach={setSpinach} />}
       <div className="p-8">
         
         <div className="bg-gray-200 bg-opacity-50 ">
@@ -677,7 +792,7 @@ useEffect(() => {
             </div>
             <div className={`${wfcolor} text-white p-4 rounded-2xl  flex-grow`}>
               <h3 className="text-center px-4">Water Flow: </h3>
-              <p className="text-center px-4">{waterflow}</p>
+              <p className="text-center px-4">{wfdata}</p>
             </div>
           </div>
         </div>
