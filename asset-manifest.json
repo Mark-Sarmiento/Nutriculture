@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/Nutriculture/static/css/main.86119b62.css",
-    "main.js": "/Nutriculture/static/js/main.50ee2500.js",
+    "main.js": "/Nutriculture/static/js/main.c1fc5a33.js",
     "static/media/homepage2.mp4": "/Nutriculture/static/media/homepage2.14e069e692658e0cb10a.mp4",
     "static/media/login.jpg": "/Nutriculture/static/media/login.8222c882f9372ee39e1a.jpg",
     "static/media/spinach.jpeg": "/Nutriculture/static/media/spinach.bc4ba73fdf41ec090518.jpeg",
     "static/media/petchay.jpg": "/Nutriculture/static/media/petchay.b7cb0d0d84d6145b4bb9.jpg",
     "index.html": "/Nutriculture/index.html",
     "main.86119b62.css.map": "/Nutriculture/static/css/main.86119b62.css.map",
-    "main.50ee2500.js.map": "/Nutriculture/static/js/main.50ee2500.js.map"
+    "main.c1fc5a33.js.map": "/Nutriculture/static/js/main.c1fc5a33.js.map"
   },
   "entrypoints": [
     "static/css/main.86119b62.css",
-    "static/js/main.50ee2500.js"
+    "static/js/main.c1fc5a33.js"
   ]
 }
