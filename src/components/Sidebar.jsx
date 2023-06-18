@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { UserAuth } from '../context/AuthContext';
 import { RiDashboardFill, RiPlantFill, RiLogoutBoxRLine } from 'react-icons/ri';
 import { BsArrowLeftShort, BsPlusLg, BsChevronDown } from 'react-icons/bs';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink,  Outlet, useNavigate } from 'react-router-dom';
 
 const Sidebar = ({children}) => {
   const { logOut, user } = UserAuth();
-
   const [open, setOpen] = useState(true);
   const [submenuOpen, setSubmenuOpen] = useState(false);
-
+  const navigate = useNavigate();
   const menuItem = [
     {
       path: '/dashboard',
@@ -53,10 +52,12 @@ const Sidebar = ({children}) => {
   const handleSignOut = async () => {
     try {
       await logOut();
+      navigate("/Nutriculture")
     } catch (error) {
       console.log(error);
     }
   };
+
 
   return (
     <div className={`inline-flex  `}>
